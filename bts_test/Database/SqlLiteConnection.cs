@@ -2,6 +2,7 @@ using System;
 using System.Data.SQLite;
 using Microsoft.Extensions.Configuration;
 
+namespace bts_test.Database;
 public class SqlLiteConnection
 {
     private string connectionString;

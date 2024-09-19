@@ -2,6 +2,7 @@ using System;
 using System.Data.SQLite;
 using bts_test.Models;
 
+namespace bts_test.Database;
 public class SqlLiteQuery {
     private string connectionString;
     private readonly IConfiguration _config;
@@ -45,4 +46,30 @@ public class SqlLiteQuery {
         return user;
     }
     // task
+
+    public void RegisterUser(UserModel user) {
+        using (var connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+
+            var insertUser = @"
+                INSERT INTO RegistrationRequest (Email, Username, Password)
+                VALUES (@Email, @Username, @Password);";
+
+            using (var command = new SQLiteCommand(insertUser, connection))
+            {
+                command.Parameters.AddWithValue("@Email", user.Email);
+                command.Parameters.AddWithValue("@Username", user.Username);
+                command.Parameters.AddWithValue("@Password", user.Password);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    throw new InvalidOperationException("Failed to insert user into the database.");
+                }
+            }
+        }
+    }
+
 }

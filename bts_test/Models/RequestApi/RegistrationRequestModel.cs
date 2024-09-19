@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace bts_test.Models;
-public class RegistrationRequest
+public class RegistrationRequestModel
 {
     [Required]
     [EmailAddress]
